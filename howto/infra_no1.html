@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>infra_no1.md</title>
+        <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+
+        <style>
+            /* Tomorrow Theme */
+            /* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+            /* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+            /* Tomorrow Comment */
+            .hljs-comment,
+            .hljs-quote {
+                color: #8e908c;
+            }
+
+            /* Tomorrow Red */
+            .hljs-variable,
+            .hljs-template-variable,
+            .hljs-tag,
+            .hljs-name,
+            .hljs-selector-id,
+            .hljs-selector-class,
+            .hljs-regexp,
+            .hljs-deletion {
+                color: #c82829;
+            }
+
+            /* Tomorrow Orange */
+            .hljs-number,
+            .hljs-built_in,
+            .hljs-builtin-name,
+            .hljs-literal,
+            .hljs-type,
+            .hljs-params,
+            .hljs-meta,
+            .hljs-link {
+                color: #f5871f;
+            }
+
+            /* Tomorrow Yellow */
+            .hljs-attribute {
+                color: #eab700;
+            }
+
+            /* Tomorrow Green */
+            .hljs-string,
+            .hljs-symbol,
+            .hljs-bullet,
+            .hljs-addition {
+                color: #718c00;
+            }
+
+            /* Tomorrow Blue */
+            .hljs-title,
+            .hljs-section {
+                color: #4271ae;
+            }
+
+            /* Tomorrow Purple */
+            .hljs-keyword,
+            .hljs-selector-tag {
+                color: #8959a8;
+            }
+
+            .hljs {
+                display: block;
+                overflow-x: auto;
+                color: #4d4d4c;
+                padding: 0.5em;
+            }
+
+            .hljs-emphasis {
+                font-style: italic;
+            }
+
+            .hljs-strong {
+                font-weight: bold;
+            }
+        </style>
+        <link rel="stylesheet" href="../css/github-markdown.css" type="text/css" />
+        <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    </head>
+    <body>
+        <script>
+            mermaid.initialize({
+                startOnLoad: true,
+                theme:
+                    document.body.classList.contains("vscode-dark") ||
+                    document.body.classList.contains("vscode-high-contrast")
+                        ? "dark"
+                        : "default",
+            });
+        </script>
+        <h1
+            id="%E3%83%9D%E3%83%BC%E3%83%88%E3%83%95%E3%82%A9%E3%83%AA%E3%82%AA%E3%82%B5%E3%83%BC%E3%83%90%E3%83%BC%E3%82%92%E8%A8%AD%E5%AE%9A%E3%81%97%E3%82%88%E3%81%86"
+        >
+            ポートフォリオサーバーを設定しよう
+        </h1>
+        <p>本稿では、当サイトのサーバー側の設定手順を記載しています。</p>
+        <h2 id="0%E5%89%8D%E6%8F%90%E6%9D%A1%E4%BB%B6">0.前提条件</h2>
+        <ul>
+            <li>AWSのアカウントを取得していること。</li>
+            <li>AWSのセキュリティ対策として、IAMや多要素認証をしていること。</li>
+            <li>本稿では Mac mini(2023)(macOS Sonoma 14.3.1) を使用する。</li>
+            <li>
+                構成は以下の通り
+                <ul>
+                    <li>AWS EC2 にて、Ubuntu 20.04 LTS のインスタンスを作成する。</li>
+                    <li>Web サーバーアプリケーションには Nginx を使用する。</li>
+                    <li>
+                        作成したページは2枚(ポートフォリオとなる <code>index.html</code> と、本稿
+                        <code>/howto/infra_no1.html</code>)
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <h2
+            id="1-ec2-%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9%E3%82%92%E8%B5%B7%E5%8B%95%E3%81%99%E3%82%8B"
+        >
+            1. EC2 インスタンスを起動する
+        </h2>
+        <h3
+            id="1-1-ec2-%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9%E3%82%92%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B"
+        >
+            1-1. EC2 インスタンスを作成する
+        </h3>
+        <p>
+            AWS にルートユーザーでサインインし、AWS の画面左上の検索窓で「EC2」と入力して、EC2
+            ダッシュボードを開く。画面中央部の「インスタンスを起動」という橙色のボタンを押下する。
+        </p>
+        <p><img src="images/a_EC2起動ボタン.png" alt="EC2起動ボタン" /></p>
+        <p>
+            画面中央の「クイックスタート」で Ubuntu を選択する。Amazon マシンイメージ(AMI)
+            は、今回の使用環境であり、かつ、無料利用枠の対象(※1)でもある、「Ubuntu Server 20.04 LTS
+            (HVM), SSD Volume Type 」を選択する。アーキテクチャは、64ビット
+            (Arm)を選択すると、無料利用枠の対象(※1)でなくなるため、64ビット (x86)のままにしておく。
+        </p>
+        <p>※1 2024/2/20 時点</p>
+        <p>
+            <img src="images/b_OSイメージ選択.png" alt="OSイメージ選択" />
+            <img
+                src="images/c_インスタンスタイプ_キーペア.png"
+                alt="インスタンスタイプ・キーペア"
+            />
+            <img src="images/d_ネットワーク設定.png" alt="ネットワーク設定" />
+        </p>
+        <p>
+            上図「ファイアウォール(セキュリティグループ)」では、「セキュリティグループを作成」「任意の場所」を選択し、「からの
+            SSH トラフィックを許可」「インターネットからの HTTP
+            トラフィックを許可」にチェックを入れる。(※2)
+        </p>
+        <p>※2 上図では HTTPS にもチェックが入ってしまっているが、後で削除している。</p>
+        <h3 id="1-2-%E3%82%AD%E3%83%BC%E3%83%9A%E3%82%A2%E3%81%AE%E4%BD%9C%E6%88%90">
+            1-2. キーペアの作成
+        </h3>
+        <p>
+            起動するインスタンスに SSH
+            でアクセスするため、キーペアを作成する。任意の名前をつけて、キーペアをダウンロードする。
+        </p>
+        <p><img src="images/e_キーペア.png" alt="キーペア" /></p>
+        <h3
+            id="1-3-%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9%E3%81%AE%E8%B5%B7%E5%8B%95"
+        >
+            1-3. インスタンスの起動
+        </h3>
+        <p>以上が完了したあと、「インスタンスの起動」ボタンを押下し、インスタンスを起動する。</p>
+        <h3
+            id="1-4-%E3%82%BF%E3%83%BC%E3%83%9F%E3%83%8A%E3%83%AB%E3%81%8B%E3%82%89%E3%83%AA%E3%83%A2%E3%83%BC%E3%83%88%E6%8E%A5%E7%B6%9A"
+        >
+            1-4. ターミナルからリモート接続
+        </h3>
+        <p>
+            ターミナルを開き、1-2. キーペアの作成 にて作成したキーペアを、
+            <code>~/.ssh</code> ディレクトリ配下に移動させる。ディレクトリがなければ作成する。
+            「インスタンスに接続」&gt;「SSH
+            クライアント」と画面遷移すると、以下のような接続手順が記されている。
+        </p>
+        <ol>
+            <li>SSH クライアントを開く。</li>
+            <li>
+                プライベートキーファイルを見つける。このインスタンスの起動に使用されるキーは
+                <code>xxx.pem</code>
+            </li>
+            <li>
+                必要に応じて、以下のコマンドを実行して、キーが公開されていないことを確認する。<code
+                    >chmod 400 &quot;xxx.pem&quot;</code
+                >
+                4.パブリック DNS を使用してインスタンスに接続 例:
+                <code>ssh -i &quot;xxx.pem&quot; ubuntu@(割り当てられたパブリック IPv4 DNS)</code>
+            </li>
+        </ol>
+        <p>この手順に従って、SSH での接続を試みる。</p>
+        <p><img src="images/f_SSH接続手順.png" alt="SSH 接続手順" /></p>
+        <h2
+            id="2-nginx-%E3%82%92%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%99%E3%82%8B"
+        >
+            2. Nginx をインストールする
+        </h2>
+        <h3 id="2-1-nginx-%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB">
+            2-1. Nginx のインストール
+        </h3>
+        <p>
+            Web サーバー用のソフトとして、Nginx を選択する。本稿の執筆時点で、Web サイトの用途は
+            HTML
+            を1ページ表示するにとどまり、ここからサイトをどのような方向性で展開していくか決めかねているため、一旦、直近で学習した
+            Nginx の復習がてら、設定をしていく。また、Nginx の方がメモリの使用量が少ないため、EC2
+            の無料枠を使用している状況下にも向いていると考えた。
+        </p>
+        <p>以下のコマンドを実行して、Nginx をインストールする。</p>
+        <pre class="hljs"><code><div>sudo apt update
+sudo apt install nginx
+</div></code></pre>
+        <p><img src="images/g_nginxインストール.png" alt="nginx インストール" /></p>
+        <p>
+            一度、インストールに成功しているか、ブラウザで確認する。<code
+                >http://(コピーしたIP アドレス)</code
+            >
+            にアクセスして、以下のような画面が表示されていればよい。
+        </p>
+        <p><img src="images/h_nginxトップページ.png" alt="nginx トップページ" /></p>
+        <h3 id="2-2-%E4%BD%9C%E6%88%90%E3%81%97%E3%81%9F-html-%E3%81%AE%E8%BB%A2%E9%80%81">
+            2-2. 作成した HTML の転送
+        </h3>
+        <p>
+            作成したHTML をEC2 インスタンスに配置し、公開する。以下のコマンド( SSH
+            接続に使ったものの <code>ssh</code> を
+            <code>sftp</code> に置き換えたもの)でログインできる。
+        </p>
+        <pre
+            class="hljs"
+        ><code><div>sftp -i "~/.ssh/xxx.pem" ubuntu@(割り当てられたパブリック IPv4 DNS)
+</div></code></pre>
+        <p>
+            SFTP では、<code>cd</code> や<code>ls</code>
+            などのコマンドが使えるため、それを利用して、ドキュメントルートの<code
+                >/var/www/html</code
+            >
+            にリモートのカレントディレクトリを移動させ... たいところだが、EC2
+            のユーザーまわりの設定がそのままだと、ドキュメントルートへのパーミッションがないのか、<code
+                >Permission Denied.</code
+            >
+            が発生してしまう。そのため、一旦、<code>/home/ubuntu</code>
+            下に転送用の一時的なディレクトリ<code>temp</code> を作成し、そこから再度 SSH
+            でログインして、<code>mv</code> コマンドで移動させるようにする。
+        </p>
+        <p>
+            また、<code>lcd</code> や<code>lls</code> など、通常のコマンドに<code>l</code>
+            をつけることで、ローカルの操作が可能となる。これを使い、ローカルのカレントディレクトリを、作成した
+            HTML が置かれている場所に移動させる。
+        </p>
+        <p>
+            カレントディレクトリの移動が完了したら、ディレクトリの構成が一致するように、mkdir
+            でディレクトリを作成する。Ubuntu では、SFTP の<code>put</code>
+            コマンドで、ディレクトリとその配下のファイルを転送できないバグ？があるためである。
+        </p>
+        <p>
+            ディレクトリ構成が一致したら、<code>put</code>
+            コマンドで各ディレクトリごとに必要なファイルを転送する。
+        </p>
+        <pre class="hljs"><code><div>&gt; put (ローカルのファイル名) (リモートのディレクトリ名)
+</div></code></pre>
+        <p>
+            すべてのファイルの転送に成功したら、SFTP からログアウトし、再度 SSH
+            でログインする。その後、以下のコマンドで、まとめて移動する。
+        </p>
+        <pre class="hljs"><code><div>sudo mv ~/temp/* /var/www/html/
+</div></code></pre>
+        <p>
+            再度ブラウザでアクセスすると、以下のように、作成したポートフォリオが表示できるようになった。
+        </p>
+        <p>
+            <img src="images/i_ポートフォリオ表示テスト.png" alt="ポートフォリオ表示テスト" />
+        </p>
+        <h2
+            id="3-%E3%81%BE%E3%81%A8%E3%82%81%E3%81%A8%E4%BB%8A%E5%BE%8C%E3%81%AE%E5%B1%95%E6%9C%9B"
+        >
+            3. まとめと今後の展望
+        </h2>
+        <p>
+            今回は、EC2 インスタンスを起動し、Nginx をインストール、作成した HTML
+            ファイルの配置を行った。ドキュメントの作成や、キャプチャの撮影等をしながらの作業のため、正確な所要時間は不明だが、他の作業も入れると8時間ほどだったと思われる。この一連の流れで、SFTP
+            でファイルを転送するところに課題があった。今後は、SFTP
+            専用のユーザーを作成して、ドキュメントルートに直接転送できるように考えていきたい。また、作成した
+            Web サイトは HTTP 接続のため、HTTPS 化もしていきたい。そうすると、AWS 環境では、Let’s
+            encrypt を AWS
+            のドメインでは発行できないという、証明書の問題が発生する。そのため、独自ドメインの取得なども視野に入る。
+        </p>
+        <h2 id="4-%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE">4. 参考文献</h2>
+        <p>
+            Nginx とは？ Apache との違いについて分かりやすく解説！ (<a
+                href="https://academy.gmocloud.com/qa/20160616/2761"
+                >https://academy.gmocloud.com/qa/20160616/2761</a
+            >
+            閲覧日:2024-02-21, 更新日:2016-06-16)
+        </p>
+    </body>
+</html>
