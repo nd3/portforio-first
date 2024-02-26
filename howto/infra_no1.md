@@ -18,25 +18,25 @@
 
 AWS にルートユーザーでサインインし、AWS の画面左上の検索窓で「EC2」と入力して、EC2 ダッシュボードを開く。画面中央部の「インスタンスを起動」という橙色のボタンを押下する。
 
-![EC2起動ボタン](<images/a_EC2起動ボタン.png>)
+<img src="images/a_ec2_awake_button.png" width="80%" alt="EC2起動ボタン">
 
 画面中央の「クイックスタート」で Ubuntu を選択する。Amazon マシンイメージ(AMI) は、今回の使用環境であり、かつ、無料利用枠の対象(※1)でもある、「Ubuntu Server 20.04 LTS (HVM), SSD Volume Type 」を選択する。アーキテクチャは、64ビット (Arm)を選択すると、無料利用枠の対象(※1)でなくなるため、64ビット (x86)のままにしておく。
 
 ※1 2024/2/20 時点
 
-![OSイメージ選択](<images/b_OSイメージ選択.png>)
-![インスタンスタイプ・キーペア](<images/c_インスタンスタイプ_キーペア.png>)
-![ネットワーク設定](<images/d_ネットワーク設定.png>)
+<img src="images/b_os_image_choose.png" width="80%" alt="OSイメージ選択">
+<img src="images/c_instance-type_key-pair.png" width="80%" alt="インスタンスタイプ・キーペア">
+<img src="images/d_network_settings.png" width="80%" alt="ネットワーク設定">
 
-上図「ファイアウォール(セキュリティグループ)」では、「セキュリティグループを作成」「任意の場所」を選択し、「からの SSH トラフィックを許可」「インターネットからの HTTP トラフィックを許可」にチェックを入れる。(※2)
+上図「ファイアウォール(セキュリティグループ)」では、「セキュリティグループを作成」「自分の IP」を選択し(※2)、「からの SSH トラフィックを許可」「インターネットからの HTTP トラフィックを許可」にチェックを入れる。
 
-※2 上図では HTTPS にもチェックが入ってしまっているが、後で削除している。
+※2 HTTP アクセスに関しては、公開するタイミングで設定を変更する。
 
 ### 1-2. キーペアの作成
 
 起動するインスタンスに SSH でアクセスするため、キーペアを作成する。任意の名前をつけて、キーペアをダウンロードする。
 
-![キーペア](<images/e_キーペア.png>)
+<img src="images/e_key-pair.png" width="80%" alt="キーペア">
 
 ### 1-3. インスタンスの起動
 
@@ -55,7 +55,7 @@ AWS にルートユーザーでサインインし、AWS の画面左上の検索
 
 この手順に従って、SSH での接続を試みる。
 
-![SSH 接続手順](<images/f_SSH接続手順.png>)
+<img src="images/f_ssh_connecting.png" width="80%" alt="SSH 接続手順">
 
 ## 2. Nginx をインストールする
 
@@ -70,11 +70,11 @@ sudo apt update
 sudo apt install nginx
 ```
 
-![nginx インストール](<images/g_nginxインストール.png>)
+<img src="images/g_nginx_install.png" width="80%" alt="nginx インストール">
 
-一度、インストールに成功しているか、ブラウザで確認する。`http://(コピーしたIP アドレス)` にアクセスして、以下のような画面が表示されていればよい。
+一度、インストールに成功しているか、ブラウザで確認する。`http://(コピーした IP アドレス)` にアクセスして、以下のような画面が表示されていればよい。
 
-![nginx トップページ](<images/h_nginxトップページ.png>)
+<img src="images/h_nginx_top.png" width="80%" alt="nginx トップページ">
 
 ### 2-2. 作成した HTML の転送
 
@@ -104,12 +104,101 @@ sudo mv ~/temp/* /var/www/html/
 
 再度ブラウザでアクセスすると、以下のように、作成したポートフォリオが表示できるようになった。
 
-![ポートフォリオ表示テスト](<images/i_ポートフォリオ表示テスト.png>)
+<img src="images/i_portfolio_disp.png" width="80%" alt="ポートフォリオ表示テスト">
 
-## 3. まとめと今後の展望
+## 3. SFTP 専用ユーザーの作成
 
-今回は、EC2 インスタンスを起動し、Nginx をインストール、作成した HTML ファイルの配置を行った。ドキュメントの作成や、キャプチャの撮影等をしながらの作業のため、正確な所要時間は不明だが、他の作業も入れると8時間ほどだったと思われる。この一連の流れで、SFTP でファイルを転送するところに課題があった。今後は、SFTP 専用のユーザーを作成して、ドキュメントルートに直接転送できるように考えていきたい。また、作成した Web サイトは HTTP 接続のため、HTTPS 化もしていきたい。そうすると、AWS 環境では、Let’s encrypt を AWS のドメインでは発行できないという、証明書の問題が発生する。そのため、独自ドメインの取得なども視野に入る。
+ここまでの作業で、SFTP でファイルを転送する際の権限まわりに課題が見つかった。よく調査をすると、ユーザーとグループに問題があることが分かった。
 
-## 4. 参考文献
+### 3-1. SFTP 専用ユーザーとグループの設定
 
-Nginx とは？ Apache との違いについて分かりやすく解説！ (<https://academy.gmocloud.com/qa/20160616/2761> 閲覧日:2024-02-21, 更新日:2016-06-16)
+まず、SFTP 専用ユーザーを作成する。
+
+```shell
+sudo adduser [ユーザー名]
+```
+
+次に、SFTP 専用ユーザーを、Nginx や Apache などで、公開用のグループとして設定されることが多い `www-data` に変更する。グループ `www-data` を作成後、`usermod` コマンドにより、主グループを変更する。主グループを `www-data` に変更することで、`put` コマンドでアップロード後、`chown` でグループの修正をすることなく、そのまま公開することができる。
+
+```shell
+sudo groupadd www-data
+sudo adduser [ユーザー名] www-data
+sudo usermod -g www-data [ユーザ名]
+```
+
+### 3-3. 認証鍵の設定
+
+ローカルでログインするための鍵を、ここで生成しておく。
+
+```shell
+su [ユーザー名]
+ssh-keygen
+```
+
+`ssh-keygen` により、秘密鍵 `id_rsa` と、公開鍵 `id_rsa.pub` が生成される。
+
+公開鍵の名前を `authorized_keys` にしておき、パーミッションを600に変更する。
+
+```shell
+sudo mv id_rsa.pub authorized_keys
+sudo chmod 600 authorized_keys
+```
+
+また、ローカルに保存する秘密鍵のパーミッションを600に変更する。
+ローカルの秘密鍵は、`ホスト名.key` のように、わかりやすい名前をつけておくとよい。
+
+```shell
+sudo mv id_rsa [名前] # 任意
+sudo chmod 600 [秘密鍵]
+```
+
+### 3-4. SFTP 専用ユーザーの SSH 設定
+
+SFTP 専用ユーザーで SFTP 接続した時の設定を編集する。`/etc/ssh/sshd_config` で、`internal-sftp` を使うことで、個別設定が柔軟に行える。
+
+```conf /etc/ssh/sshd_config
+#Subsystem sftp /usr/lib/openssh/sftp-server
+Subsystem sftp internal-sftp
+```
+
+個々の設定は以下の通り。
+
+```conf /etc/ssh/sshd_config
+Match User [SFTP 専用ユーザーのユーザー名]
+    ChrootDirectory [このユーザーが接続できるディレクトリ]
+    X11Forwarding no
+    AllowTcpForwarding no
+    ForceCommand internal-sftp
+```
+
+設定ファイルを編集後、再起動する。
+
+```shell
+sudo systemctl restart sshd
+```
+
+### 3-5. パーミッションの設定
+
+最後にパーミッションの設定を変更する。チェンジルート(3-4. にて、`ChrootDirectory` で設定)は
+
+**root ユーザーかつ root ディレクトリで、パーミッションは755である必要がある。**
+
+という制約がある。そのため、実際には、チェンジルートの下にディレクトリを作成し、そこに `put` をするような運用となる。
+
+```shell
+chown root:root [チェンジルート]
+chmod 755 [チェンジルート]
+mkdir [put用ディレクトリ]
+chown -R root:www-data [put用ディレクトリ]
+chmod 775 [put用ディレクトリ]
+```
+
+## 4. まとめと今後の展望
+
+今回は、EC2 インスタンスを起動し、Nginx をインストール、作成した HTML ファイルの配置を行った。ドキュメントの作成や、キャプチャの撮影等をしながらの作業のため、正確な所要時間は不明だが、他の作業も入れると8時間ほどだったと思われる。今後は、作成した Web サイトは HTTP 接続のため、HTTPS 化もしていきたい。そうすると、AWS 環境では、Let’s encrypt を AWS のドメインでは発行できないという、証明書の問題が発生する。そのため、独自ドメインの取得なども視野に入る。
+
+## 5. 参考文献
+
+* Nginx とは？ Apache との違いについて分かりやすく解説！ (<https://academy.gmocloud.com/qa/20160616/2761> 閲覧日:2024-02-21, 更新日:2016-06-16)
+* Ubuntu18 チェンジルート付きでSFTPユーザーの追加 (<https://heppoko-room.net/archives/1834> 閲覧日:2024-02-22, 更新日:2021-12-14)
+* LinuxでSFTP専用ユーザーを作成してみた。 (<https://qiita.com/kusano00/items/279eba3531b9c224725b> 閲覧日:2024-02-22, 更新日:2021-02-17)

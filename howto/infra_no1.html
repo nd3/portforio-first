@@ -130,7 +130,7 @@
             AWS にルートユーザーでサインインし、AWS の画面左上の検索窓で「EC2」と入力して、EC2
             ダッシュボードを開く。画面中央部の「インスタンスを起動」という橙色のボタンを押下する。
         </p>
-        <p><img src="images/a_EC2起動ボタン.png" alt="EC2起動ボタン" /></p>
+        <img src="images/a_ec2_awake_button.png" width="80%" alt="EC2起動ボタン" />
         <p>
             画面中央の「クイックスタート」で Ubuntu を選択する。Amazon マシンイメージ(AMI)
             は、今回の使用環境であり、かつ、無料利用枠の対象(※1)でもある、「Ubuntu Server 20.04 LTS
@@ -138,20 +138,19 @@
             (Arm)を選択すると、無料利用枠の対象(※1)でなくなるため、64ビット (x86)のままにしておく。
         </p>
         <p>※1 2024/2/20 時点</p>
+        <img src="images/b_os_image_choose.png" width="80%" alt="OSイメージ選択" />
+        <img
+            src="images/c_instance-type_key-pair.png"
+            width="80%"
+            alt="インスタンスタイプ・キーペア"
+        />
+        <img src="images/d_network_settings.png" width="80%" alt="ネットワーク設定" />
         <p>
-            <img src="images/b_OSイメージ選択.png" alt="OSイメージ選択" />
-            <img
-                src="images/c_インスタンスタイプ_キーペア.png"
-                alt="インスタンスタイプ・キーペア"
-            />
-            <img src="images/d_ネットワーク設定.png" alt="ネットワーク設定" />
+            上図「ファイアウォール(セキュリティグループ)」では、「セキュリティグループを作成」「自分の
+            IP」を選択し(※2)、「からの SSH トラフィックを許可」「インターネットからの HTTP
+            トラフィックを許可」にチェックを入れる。
         </p>
-        <p>
-            上図「ファイアウォール(セキュリティグループ)」では、「セキュリティグループを作成」「任意の場所」を選択し、「からの
-            SSH トラフィックを許可」「インターネットからの HTTP
-            トラフィックを許可」にチェックを入れる。(※2)
-        </p>
-        <p>※2 上図では HTTPS にもチェックが入ってしまっているが、後で削除している。</p>
+        <p>※2 HTTP アクセスに関しては、公開するタイミングで設定を変更する。</p>
         <h3 id="1-2-%E3%82%AD%E3%83%BC%E3%83%9A%E3%82%A2%E3%81%AE%E4%BD%9C%E6%88%90">
             1-2. キーペアの作成
         </h3>
@@ -159,7 +158,7 @@
             起動するインスタンスに SSH
             でアクセスするため、キーペアを作成する。任意の名前をつけて、キーペアをダウンロードする。
         </p>
-        <p><img src="images/e_キーペア.png" alt="キーペア" /></p>
+        <img src="images/e_key-pair.png" width="80%" alt="キーペア" />
         <h3
             id="1-3-%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9%E3%81%AE%E8%B5%B7%E5%8B%95"
         >
@@ -192,7 +191,7 @@
             </li>
         </ol>
         <p>この手順に従って、SSH での接続を試みる。</p>
-        <p><img src="images/f_SSH接続手順.png" alt="SSH 接続手順" /></p>
+        <img src="images/f_ssh_connecting.png" width="80%" alt="SSH 接続手順" />
         <h2
             id="2-nginx-%E3%82%92%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%99%E3%82%8B"
         >
@@ -212,14 +211,14 @@
         <pre class="hljs"><code><div>sudo apt update
 sudo apt install nginx
 </div></code></pre>
-        <p><img src="images/g_nginxインストール.png" alt="nginx インストール" /></p>
+        <img src="images/g_nginx_install.png" width="80%" alt="nginx インストール" />
         <p>
             一度、インストールに成功しているか、ブラウザで確認する。<code
-                >http://(コピーしたIP アドレス)</code
+                >http://(コピーした IP アドレス)</code
             >
             にアクセスして、以下のような画面が表示されていればよい。
         </p>
-        <p><img src="images/h_nginxトップページ.png" alt="nginx トップページ" /></p>
+        <img src="images/h_nginx_top.png" width="80%" alt="nginx トップページ" />
         <h3 id="2-2-%E4%BD%9C%E6%88%90%E3%81%97%E3%81%9F-html-%E3%81%AE%E8%BB%A2%E9%80%81">
             2-2. 作成した HTML の転送
         </h3>
@@ -270,30 +269,147 @@ sudo apt install nginx
         <p>
             再度ブラウザでアクセスすると、以下のように、作成したポートフォリオが表示できるようになった。
         </p>
-        <p>
-            <img src="images/i_ポートフォリオ表示テスト.png" alt="ポートフォリオ表示テスト" />
-        </p>
+        <img src="images/i_portfolio_disp.png" width="80%" alt="ポートフォリオ表示テスト" />
         <h2
-            id="3-%E3%81%BE%E3%81%A8%E3%82%81%E3%81%A8%E4%BB%8A%E5%BE%8C%E3%81%AE%E5%B1%95%E6%9C%9B"
+            id="3-sftp-%E5%B0%82%E7%94%A8%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%E3%81%AE%E4%BD%9C%E6%88%90"
         >
-            3. まとめと今後の展望
+            3. SFTP 専用ユーザーの作成
+        </h2>
+        <p>
+            ここまでの作業で、SFTP
+            でファイルを転送する際の権限まわりに課題が見つかった。よく調査をすると、ユーザーとグループに問題があることが分かった。
+        </p>
+        <h3
+            id="3-1-sftp-%E5%B0%82%E7%94%A8%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%E3%81%A8%E3%82%B0%E3%83%AB%E3%83%BC%E3%83%97%E3%81%AE%E8%A8%AD%E5%AE%9A"
+        >
+            3-1. SFTP 専用ユーザーとグループの設定
+        </h3>
+        <p>まず、SFTP 専用ユーザーを作成する。</p>
+        <pre class="hljs"><code><div>sudo adduser [ユーザー名]
+</div></code></pre>
+        <p>
+            次に、SFTP 専用ユーザーを、Nginx や Apache
+            などで、公開用のグループとして設定されることが多い
+            <code>www-data</code> に変更する。グループ <code>www-data</code> を作成後、<code
+                >usermod</code
+            >
+            コマンドにより、主グループを変更する。主グループを
+            <code>www-data</code> に変更することで、<code>put</code> コマンドでアップロード後、<code
+                >chown</code
+            >
+            でグループの修正をすることなく、そのまま公開することができる。
+        </p>
+        <pre class="hljs"><code><div>sudo groupadd www-data
+sudo adduser [ユーザー名] www-data
+sudo usermod -g www-data [ユーザ名]
+</div></code></pre>
+        <h3 id="3-3-%E8%AA%8D%E8%A8%BC%E9%8D%B5%E3%81%AE%E8%A8%AD%E5%AE%9A">3-3. 認証鍵の設定</h3>
+        <p>ローカルでログインするための鍵を、ここで生成しておく。</p>
+        <pre class="hljs"><code><div>su [ユーザー名]
+ssh-keygen
+</div></code></pre>
+        <p>
+            <code>ssh-keygen</code> により、秘密鍵 <code>id_rsa</code> と、公開鍵
+            <code>id_rsa.pub</code> が生成される。
+        </p>
+        <p>
+            公開鍵の名前を <code>authorized_keys</code> にしておき、パーミッションを600に変更する。
+        </p>
+        <pre class="hljs"><code><div>sudo mv id_rsa.pub authorized_keys
+sudo chmod 600 authorized_keys
+</div></code></pre>
+        <p>
+            また、ローカルに保存する秘密鍵のパーミッションを600に変更する。
+            ローカルの秘密鍵は、<code>ホスト名.key</code>
+            のように、わかりやすい名前をつけておくとよい。
+        </p>
+        <pre class="hljs"><code><div>sudo mv id_rsa [名前] # 任意
+sudo chmod 600 [秘密鍵]
+</div></code></pre>
+        <h3
+            id="3-4-sftp-%E5%B0%82%E7%94%A8%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%E3%81%AE-ssh-%E8%A8%AD%E5%AE%9A"
+        >
+            3-4. SFTP 専用ユーザーの SSH 設定
+        </h3>
+        <p>
+            SFTP 専用ユーザーで SFTP 接続した時の設定を編集する。<code>/etc/ssh/sshd_config</code>
+            で、<code>internal-sftp</code> を使うことで、個別設定が柔軟に行える。
+        </p>
+        <pre class="hljs"><code><div>#Subsystem sftp /usr/lib/openssh/sftp-server
+Subsystem sftp internal-sftp
+</div></code></pre>
+        <p>個々の設定は以下の通り。</p>
+        <pre class="hljs"><code><div>Match User [SFTP 専用ユーザーのユーザー名]
+    ChrootDirectory [このユーザーが接続できるディレクトリ]
+    X11Forwarding no
+    AllowTcpForwarding no
+    ForceCommand internal-sftp
+</div></code></pre>
+        <p>設定ファイルを編集後、再起動する。</p>
+        <pre class="hljs"><code><div>sudo systemctl restart sshd
+</div></code></pre>
+        <h3
+            id="3-5-%E3%83%91%E3%83%BC%E3%83%9F%E3%83%83%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AE%E8%A8%AD%E5%AE%9A"
+        >
+            3-5. パーミッションの設定
+        </h3>
+        <p>
+            最後にパーミッションの設定を変更する。チェンジルート(3-4. にて、<code
+                >ChrootDirectory</code
+            >
+            で設定)は
+        </p>
+        <p>
+            <strong
+                >root ユーザーかつ root
+                ディレクトリで、パーミッションは755である必要がある。</strong
+            >
+        </p>
+        <p>
+            という制約がある。そのため、実際には、チェンジルートの下にディレクトリを作成し、そこに
+            <code>put</code> をするような運用となる。
+        </p>
+        <pre class="hljs"><code><div>chown root:root [チェンジルート]
+chmod 755 [チェンジルート]
+mkdir [put用ディレクトリ]
+chown -R root:www-data [put用ディレクトリ]
+chmod 775 [put用ディレクトリ]
+</div></code></pre>
+        <h2
+            id="4-%E3%81%BE%E3%81%A8%E3%82%81%E3%81%A8%E4%BB%8A%E5%BE%8C%E3%81%AE%E5%B1%95%E6%9C%9B"
+        >
+            4. まとめと今後の展望
         </h2>
         <p>
             今回は、EC2 インスタンスを起動し、Nginx をインストール、作成した HTML
-            ファイルの配置を行った。ドキュメントの作成や、キャプチャの撮影等をしながらの作業のため、正確な所要時間は不明だが、他の作業も入れると8時間ほどだったと思われる。この一連の流れで、SFTP
-            でファイルを転送するところに課題があった。今後は、SFTP
-            専用のユーザーを作成して、ドキュメントルートに直接転送できるように考えていきたい。また、作成した
+            ファイルの配置を行った。ドキュメントの作成や、キャプチャの撮影等をしながらの作業のため、正確な所要時間は不明だが、他の作業も入れると8時間ほどだったと思われる。今後は、作成した
             Web サイトは HTTP 接続のため、HTTPS 化もしていきたい。そうすると、AWS 環境では、Let’s
             encrypt を AWS
             のドメインでは発行できないという、証明書の問題が発生する。そのため、独自ドメインの取得なども視野に入る。
         </p>
-        <h2 id="4-%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE">4. 参考文献</h2>
-        <p>
-            Nginx とは？ Apache との違いについて分かりやすく解説！ (<a
-                href="https://academy.gmocloud.com/qa/20160616/2761"
-                >https://academy.gmocloud.com/qa/20160616/2761</a
-            >
-            閲覧日:2024-02-21, 更新日:2016-06-16)
-        </p>
+        <h2 id="5-%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE">5. 参考文献</h2>
+        <ul>
+            <li>
+                Nginx とは？ Apache との違いについて分かりやすく解説！ (<a
+                    href="https://academy.gmocloud.com/qa/20160616/2761"
+                    >https://academy.gmocloud.com/qa/20160616/2761</a
+                >
+                閲覧日:2024-02-21, 更新日:2016-06-16)
+            </li>
+            <li>
+                Ubuntu18 チェンジルート付きでSFTPユーザーの追加 (<a
+                    href="https://heppoko-room.net/archives/1834"
+                    >https://heppoko-room.net/archives/1834</a
+                >
+                閲覧日:2024-02-22, 更新日:2021-12-14)
+            </li>
+            <li>
+                LinuxでSFTP専用ユーザーを作成してみた。 (<a
+                    href="https://qiita.com/kusano00/items/279eba3531b9c224725b"
+                    >https://qiita.com/kusano00/items/279eba3531b9c224725b</a
+                >
+                閲覧日:2024-02-22, 更新日:2021-02-17)
+            </li>
+        </ul>
     </body>
 </html>
