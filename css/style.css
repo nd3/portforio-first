@@ -108,21 +108,6 @@ header #logo li a {
 	color: #000;		/*文字色*/
 }
 
-/*以下のGoogle Fontsを使う。*/
-header #logo li {
-	display: inline-block;
-	transition: 0.5s;
-	animation: opa1 1.5s both;	/*animation.cssの、opa1を実行する。1.5sは1.5秒の事。*/
-	text-align: center;
-	font-size: 1.2em;	/*文字サイズ*/
-	position: fixed;	/*画面に対して固定表示*/
-	box-shadow: 0px 0px 30px rgba(0,0,0,0.3);	/*ボックスの影。右へ、下へ、ぼかし幅。0,0,0は黒の事で0.3は色が30%出た状態。*/
-	font-family: 'Big Shoulders Display', cursive;
-	background: #fff;	/*背景色*/
-	width: 120px;		/*幅*/
-	line-height: 120px;	/*高さ*/
-}
-
 /*メインメニュー
 ---------------------------------------------------------------------------*/
 /*メニュー１個あたりの設定*/
