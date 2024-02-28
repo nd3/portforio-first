@@ -53,34 +53,37 @@ AWS EC2を用いて自力でWebサーバーを設定し、ポートフォリオ�
 
 <!-- Treeコマンドを使ってディレクトリ構成を記載 -->
 <!-- tree -a -I "github-markdown-css|.DS_Store|.git|images_photo" -L 2-->
-.<br>
-├── .gitignore<br>
-├── .vscode<br>
-│   └── sftp.json<br>
-├── README.md<br>
-├── css<br>
-│   ├── animation.css<br>
-│   ├── github-markdown-light.css<br>
-│   └── style.css<br>
-├── howto<br>
-│   ├── images<br>
-│   ├── infra_no1.html<br>
-│   └── infra_no1.md<br>
-├── images<br>
-│   ├── bg.jpg<br>
-│   ├── bg.psd<br>
-│   ├── bg1.jpg<br>
-│   ├── bg2.jpg<br>
-│   ├── bg3.jpg<br>
-│   ├── bg4.jpg<br>
-│   ├── bg_main.jpg<br>
-│   ├── logo.png<br>
-│   ├── logo.psd<br>
-│   ├── logo_pf.png<br>
-│   └── logo_pf.xcf<br>
-├── index.html<br>
-└── js<br>
-    └── main.js<br>
+
+```shell
+.
+├── .gitignore
+├── .vscode
+│   └── sftp.json
+├── README.md
+├── css
+│   ├── animation.css
+│   ├── github-markdown-light.css
+│   └── style.css
+├── howto
+│   ├── images
+│   ├── infra_no1.html
+│   └── infra_no1.md
+├── images
+│   ├── bg.jpg
+│   ├── bg.psd
+│   ├── bg1.jpg
+│   ├── bg2.jpg
+│   ├── bg3.jpg
+│   ├── bg4.jpg
+│   ├── bg_main.jpg
+│   ├── logo.png
+│   ├── logo.psd
+│   ├── logo_pf.png
+│   └── logo_pf.xcf
+├── index.html
+└── js
+    └── main.js
+```
 
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
