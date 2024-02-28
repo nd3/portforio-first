@@ -52,9 +52,11 @@ AWS EC2を用いて自力でWebサーバーを設定し、ポートフォリオ�
 ## 3. ディレクトリ構成
 
 <!-- Treeコマンドを使ってディレクトリ構成を記載 -->
-<!-- tree -a first -I "github-markdown-css|.DS_Store|.git"-->
+<!-- tree -a -I "github-markdown-css|.DS_Store|.git|images_photo" -L 2-->
 .<br>
 ├── .gitignore<br>
+├── .vscode<br>
+│   └── sftp.json<br>
 ├── README.md<br>
 ├── css<br>
 │   ├── animation.css<br>
@@ -76,15 +78,6 @@ AWS EC2を用いて自力でWebサーバーを設定し、ポートフォリオ�
 │   ├── logo.psd<br>
 │   ├── logo_pf.png<br>
 │   └── logo_pf.xcf<br>
-├── images_photo<br>
-│   ├── sample1.jpg<br>
-│   ├── sample2.jpg<br>
-│   ├── sample3.jpg<br>
-│   ├── sample4.jpg<br>
-│   ├── sample5.jpg<br>
-│   ├── sample6.jpg<br>
-│   ├── sample7.jpg<br>
-│   └── sample8.jpg<br>
 ├── index.html<br>
 └── js<br>
     └── main.js<br>
