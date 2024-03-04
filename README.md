@@ -32,7 +32,8 @@
 
 ## 1. プロジェクト概要
 
-AWS EC2を用いて自力でWebサーバーを設定し、ポートフォリオページと、設定手順を記したHTMLを配置し、外部公開する。
+AWS EC2を用いて自力でWebサーバーを設定し、ポートフォリオページと、設定手順を記したHTMLを配置し、外部公開する。<br>
+※成功したものの、EC2 の使用料が高くなってしまったため、ページ自体は一旦 Github Pages での公開とします。
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
 <!-- ## プロジェクト詳細 -->
@@ -89,7 +90,8 @@ AWS EC2を用いて自力でWebサーバーを設定し、ポートフォリオ�
 
 ## 4. 開発環境構築
 
-<http://ec2-15-168-37-255.ap-northeast-3.compute.amazonaws.com/portfolio/first/howto/infra_no1.html>
+<!-- <http://ec2-15-168-37-255.ap-northeast-3.compute.amazonaws.com/portfolio/first/howto/infra_no1.html> -->
+<https://nd3.github.io/portforio-first/howto/infra_no1.html>
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
 <!-- ## トラブルシューティング -->
