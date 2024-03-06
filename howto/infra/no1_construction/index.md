@@ -10,7 +10,7 @@
 * 構成は以下の通り
   * AWS EC2 にて、Ubuntu 20.04 LTS のインスタンスを作成する。
   * Web サーバーアプリケーションには Nginx を使用する。
-  * 作成したページは2枚(ポートフォリオとなる `index.html` と、本稿 `/howto/infra_no1.html`)
+  * 作成したページは2枚(ポートフォリオとなる `index.html` と、本稿 `/howto/infra/no1_construction/index.html`)
 
 ## 1. EC2 インスタンスを起動する
 
@@ -199,7 +199,7 @@ chmod 775 [put用ディレクトリ]
 
 ### 4-1. HTTPS 化
 
-2024-03-05に、HTTPS 化が完了。手順は<a href="infra_no2.html">こちら</a>。
+2024-03-05に、HTTPS 化が完了。手順は<a href="../no2_https_connection/">こちら</a>。
 
 ## 5. 参考文献
 
