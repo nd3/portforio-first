@@ -2,146 +2,223 @@
 <html lang="ja">
     <head>
         <meta charset="UTF-8" />
-        <title>ポートフォリオ</title>
+        <title>nd3 — ポートフォリオ</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="nd3のポートフォリオページ" />
+        <meta
+            name="description"
+            content="nd3のポートフォリオページ — フロントエンド / バックエンド エンジニア"
+        />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;700&display=swap"
+            rel="stylesheet"
+        />
+        <meta name="theme-color" content="#0F172A" />
         <link rel="stylesheet" href="css/style.css" />
     </head>
 
     <body>
-        <aside id="mainimg">メインイメージ</aside>
-
         <header>
-            <h1 id="logo">
-                <a href="/portfolio/first/"><img src="images/logo_pf.png" alt="Portfolio" /></a>
-            </h1>
+            <div class="container site-header">
+                <h1 id="logo">
+                    <a href="/portfolio/first/"><img src="images/logo_pf.png" alt="nd3" /></a>
+                </h1>
+                <div class="nav-wrap">
+                    <input type="checkbox" id="menu-toggle" hidden />
 
-            <nav>
-                <ul id="menubar">
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#skill">Skill</a></li>
-                    <li><a href="#works">Works</a></li>
-                    <!-- <li>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </li> -->
-                </ul>
-            </nav>
+                    <label class="hamburger">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                    </label>
+
+                    <div class="overlay"></div>
+
+                    <!-- <nav aria-label="Primary"> -->
+                    <nav class="menu">
+                        <!-- <ul id="primary-nav"> -->
+                        <ul>
+                            <li><a href="#about">About</a></li>
+                            <li><a href="#works">Projects</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
         </header>
 
-        <main>
-            <div class="contents bg1">
-                <section>
-                    <h2>About This Site</h2>
-                    <p>
-                        このサイトは、nd3 のポートフォリオサイトです。
-                        これまでの経歴や、制作物などをまとめています。
+        <main class="container">
+            <section class="hero" aria-labelledby="hero-title">
+                <div class="hero-inner">
+                    <div class="eyebrow">Frontend & Backend Engineer</div>
+                    <h1 id="hero-title">
+                        nd3 — シンプルで読みやすい、信頼できるプロダクトを作ります
+                    </h1>
+                    <p class="lead">
+                        Webアプリケーションの設計・開発・運用を行います。フロントエンドからバックエンド、インフラまで一貫して対応可能です。
                     </p>
-                    <p>現在はバージョン0.1 です。(2024/2/20 インフラ側を自力で設定)</p>
-                </section>
-            </div>
+                    <div class="cta">
+                        <a class="btn" href="#works">Projects</a>
+                        <a class="btn secondary" href="/howto/infra/no1_construction/"
+                            >Resume / Infra Docs</a
+                        >
+                    </div>
+                </div>
+            </section>
 
-            <!--aboutブロック開始＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
-            <div class="contents bg2" id="about">
-                <section>
-                    <h2>About Me</h2>
-                    <p>
-                        鳥取県出身のIT業界5年目(2024/2/19時点)。高校時代に全国高等学校IT・簿記選手権大会への出場をきっかけにITに興味を持つ。大学で情報工学を学び、卒業後はSES企業に入社。WebシステムやWindowsアプリケーション、API開発などを中心に、フロントエンド・バックエンド問わず実務を経験してきました。
-                    </p>
-                </section>
-            </div>
-            <!--/#about-->
+            <section class="projects" id="works">
+                <h2>Selected Projects</h2>
+                <p style="color: var(--muted); margin-top: 6px; margin-bottom: 16px">
+                    いくつか代表的な制作物を紹介します。詳細は個別ページやGitHubリンクへ。
+                </p>
+                <div class="grid">
+                    <article class="card" aria-labelledby="p1">
+                        <img src="images/bg1.jpg" alt="Project 1 screenshot" />
+                        <h3 id="p1">Portfolio Site</h3>
+                        <p style="margin: 0; color: var(--muted)">
+                            このサイトのソースです。静的サイトとしてホスティングし、インフラ構築手順を公開しています。
+                        </p>
+                        <div class="tags">
+                            <span class="tag">HTML</span><span class="tag">CSS</span
+                            ><span class="tag">Nginx</span>
+                        </div>
+                        <a
+                            href="https://github.com/nd3/portforio-first"
+                            style="margin-top: auto; color: var(--accent); font-weight: 700"
+                            >View on GitHub →</a
+                        >
+                    </article>
 
-            <!--galleryブロック開始＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
-            <div class="contents bg3" id="skill">
-                <section>
-                    <h2>Skill</h2>
+                    <article class="card" aria-labelledby="p2">
+                        <img src="images/bg2.jpg" alt="Project 2 screenshot" />
+                        <h3 id="p2">Infra HowTo</h3>
+                        <p style="margin: 0; color: var(--muted)">
+                            EC2でのサーバー構築やHTTPS導入の手順をドキュメント化し、再現可能な手順を整備しました。
+                        </p>
+                        <div class="tags">
+                            <span class="tag">AWS</span><span class="tag">Docs</span>
+                        </div>
+                        <a
+                            href="howto/infra/no1_construction/"
+                            style="margin-top: auto; color: var(--accent); font-weight: 700"
+                            >Read guide →</a
+                        >
+                    </article>
 
-                    <h3>My Skill Set</h3>
-                    <p>実際に業務で使用したスキルセットのうち、1年以上のものを以下に示します。</p>
-                    <p>
-                        <strong>■フロントエンド</strong><br />
-                        一番よく使っているのはHTML5です。<br />
-                        HTML5: 2年 :★★★<br />
-                        CSS: 2年 : ★★★<br />
-                        JSP: 2年 : ★★★<br />
-                        JavaScript: 2年 : ★★★<br />
-                    </p>
-                    <p>
-                        <strong>■バックエンド</strong><br />
-                        どちらかといえば、バックエンドの方が経験が多いです。<br />
-                        Java(Struts2): 2年 : ★★★★<br />
-                        Java(Spring Framework): 1年 : ★★★<br />
-                        VB.NET: 1年 : ★★★★<br />
-                        Golang: 1年 : ★★★★<br />
-                        BAT: 1年 : ★★★★<br />
-                    </p>
-                    <p>
-                        <strong>■DB</strong><br />
-                        キャリアのほとんどでpostgreSQLを使っていました。<br />
-                        postgreSQL: 4年 : ★★★★<br />
-                        Oracle: 1年 : ★★★<br />
-                    </p>
-                    <p>
-                        <strong>■その他</strong><br />
-                        開発等で使用したツールやFWです<br />
-                        Git: 1年 : ★★★★★<br />
-                        SVN: 2年 : ★★★<br />
-                    </p>
-                </section>
-            </div>
-            <!--/#skill-->
+                    <article class="card" aria-labelledby="p3">
+                        <img src="images/bg3.jpg" alt="Project 3 screenshot" />
+                        <h3 id="p3">Sample App</h3>
+                        <p style="margin: 0; color: var(--muted)">
+                            練習用に作ったサンプルアプリ。フロントエンドの設計とAPI連携を学ぶために実装。
+                        </p>
+                        <div class="tags">
+                            <span class="tag">JavaScript</span><span class="tag">API</span>
+                        </div>
+                        <a href="#" style="margin-top: auto; color: var(--accent); font-weight: 700"
+                            >Details →</a
+                        >
+                    </article>
+                </div>
+            </section>
 
-            <!--worksブロック開始＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝-->
-            <div class="contents bg4" id="works">
-                <section>
-                    <h2>Works</h2>
+            <section id="about">
+                <h2>About Me</h2>
+                <div class="about-grid">
+                    <div>
+                        <p>
+                            鳥取県出身。業界経験5年。フロントエンド・バックエンド両方の実務経験があります。強みは堅牢で保守しやすい設計、シンプルなUI、そしてインフラの基本理解です。
+                        </p>
+                        <h3>Experience</h3>
+                        <ul style="color: var(--muted)">
+                            <li>Webアプリケーション開発 (Java, Go, JavaScript)</li>
+                            <li>インフラ構築 (AWS, Nginx)</li>
+                            <li>CI/CD と運用自動化</li>
+                        </ul>
+                    </div>
+                    <aside class="skill-list" aria-labelledby="skills">
+                        <h4 id="skills">Skills</h4>
+                        <p style="margin: 6px 0; color: var(--muted)">主要スキルを短く示します。</p>
+                        <ul style="margin: 0; padding-left: 18px; color: var(--text)">
+                            <li>HTML / CSS / JavaScript</li>
+                            <li>Java / Go</li>
+                            <li>PostgreSQL</li>
+                            <li>Git / CI</li>
+                        </ul>
+                    </aside>
+                </div>
+            </section>
 
-                    <table class="ta1">
-                        <caption>
-                            業務外の制作物を以下に示します。
-                        </caption>
-                        <tr>
-                            <th>
-                                <a href="https://github.com/nd3/portforio-first">ポートフォリオ</a>
-                            </th>
-                            <td>
-                                左記は当サイトのリポジトリです。<br />
-                                <a href="howto/infra/no1_construction/">サーバー設定手順</a>
-                            </td>
-                        </tr>
-                        <!--                         <tr>
-                            <th><a href="#">アプリ</a></th>
-                            <td>アプリの説明です。</td>
-                        </tr> -->
-                    </table>
-                </section>
-            </div>
-            <!--/#works-->
+            <section id="contact">
+                <h2>Contact</h2>
+                <p style="color: var(--muted)">採用・案件のご相談はメールでお願いします。</p>
+                <form
+                    action="#"
+                    onsubmit="alert('サンプル送信: 実運用時はフォーム処理を実装してください');return false;"
+                    style="display: grid; gap: 12px; max-width: 640px"
+                >
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="お名前"
+                        required
+                        style="padding: 10px; border-radius: 8px; border: 1px solid #e6eef2"
+                    />
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="メールアドレス"
+                        required
+                        style="padding: 10px; border-radius: 8px; border: 1px solid #e6eef2"
+                    />
+                    <textarea
+                        name="message"
+                        rows="5"
+                        placeholder="メッセージ"
+                        required
+                        style="padding: 10px; border-radius: 8px; border: 1px solid #e6eef2"
+                    ></textarea>
+                    <button class="btn" type="submit">Send</button>
+                </form>
+            </section>
         </main>
 
         <footer>
-            <small
-                >Copyright&copy; <a href="index.html">Sample Gallery</a> All Rights Reserved.</small
+            <div
+                class="container"
+                style="display: flex; justify-content: space-between; align-items: center"
             >
-            <span class="pr"
-                ><a href="https://template-party.com/" target="_blank"
-                    >《Web Design:Template-Party》</a
-                ></span
-            >
+                <small>&copy; nd3 — All rights reserved.</small>
+                <div style="color: var(--muted)">
+                    <a href="https://github.com/nd3" target="_blank">GitHub</a>
+                </div>
+            </div>
         </footer>
 
-        <!--jQueryの読み込み-->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <!-- <script>
+            // small JS: header shadow on scroll + mobile nav toggle
+            (function () {
+                const header = document.querySelector("header");
+                const toggle = document.querySelector(".mobile-nav-toggle");
+                const nav = document.getElementById("primary-nav");
+                window.addEventListener("scroll", () => {
+                    if (window.scrollY > 10)
+                        header.style.boxShadow = "0 6px 18px rgba(15,23,42,0.06)";
+                    else header.style.boxShadow = "none";
+                });
 
-        <!--lightbox用jsファイルの読み込み-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/js/lightbox-plus-jquery.min.js"></script>
-
-        <!--このテンプレート専用のスクリプト-->
-        <script src="js/main.js"></script>
-
-        <!--ページの上部へ戻るボタン-->
-        <div class="pagetop">
-            <a href="#"><i class="fas fa-angle-double-up"></i></a>
-        </div>
+                if (toggle && nav) {
+                    toggle.addEventListener("click", () => {
+                        const expanded = toggle.getAttribute("aria-expanded") === "true";
+                        toggle.setAttribute("aria-expanded", String(!expanded));
+                        nav.classList.toggle("open");
+                        // also set focus to first link when opened
+                        if (!expanded) {
+                            const first = nav.querySelector("a");
+                            if (first) first.focus();
+                        }
+                    });
+                }
+            })();
+        </script> -->
     </body>
 </html>
