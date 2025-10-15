@@ -37,57 +37,38 @@ header { background:#fff; border-bottom:1px solid #e6eef2; position:sticky; top:
 nav ul { list-style:none; margin:0; padding:0; display:flex; gap:18px }
 nav a { color:#64748b; font-weight:700 }
 
-/* Mobile nav toggle (hamburger) */
 .nav-wrap {
   position: relative;
 }
 
-/* Hamburger bars (for animated X) */
 .hamburger {
     display:inline-block;
-    width:28px;
-    /* width: 40px; */
-    height:22px;
-    /* height: 30px; */
+    width: 40px;
+    height: 30px;
     top: 20px;
     right: 20px;
-    position: fixed; /* ← fixedにして常に左上固定 */
-    /* position:relative; */
+    position: fixed;
     cursor: pointer;
     z-index: 3;
 }
 .hamburger span {
-    /* position:absolute; */
     display: block;
-    /* left:0; */
-    /* right:0; */
     height:2px;
-    /* height: 4px; */
-    /* background:currentColor; */
     background: #333;
     margin: 6px 0;
     border-radius:2px;
-    /* transform-origin:center; */
-    /* transition: transform .22s cubic-bezier(.4,0,.2,1), opacity .18s ease; */
-    transition: 0.4s;
+    transform-origin:center;
+    transition: transform 0.4s;
 }
 
-/* ハンバーガーがXに変形 */
-/* #menu-toggle:checked + .hamburger .bar { top:50%; transform: translateY(-50%) } */
-#menu-toggle:checked + .hamburger span:nth-child(1) { transform: translateY(-10px) rotate(-45deg); }
-#menu-toggle:checked + .hamburger span:nth-child(2) { transform: translateY(0) }
-#menu-toggle:checked + .hamburger span:nth-child(3) { transform: translateY(10px) rotate(45deg);}
+#menu-toggle:checked + .hamburger span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+#menu-toggle:checked + .hamburger span:nth-child(2) { opacity: 0; }
+#menu-toggle:checked + .hamburger span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg);}
 
-/* When expanded: morph into X (use translate and rotate around center) */
-/* .mobile-nav-toggle[aria-expanded="true"] .hamburger .bar:nth-child(1) { transform: translateY(0) rotate(45deg) }
-.mobile-nav-toggle[aria-expanded="true"] .hamburger .bar:nth-child(2) { opacity:0; transform: scaleX(.6) }
-.mobile-nav-toggle[aria-expanded="true"] .hamburger .bar:nth-child(3) { transform: translateY(0) rotate(-45deg) } */
-
-/* オーバーレイ背景 */
 .overlay {
   position: fixed;
   inset: 0;
-  /* background: rgba(0,0,0,0.5); */
+  background: rgba(0,0,0,0.5);
   opacity: 0;
   pointer-events: none;
   transition: 0.4s;
@@ -99,26 +80,27 @@ nav a { color:#64748b; font-weight:700 }
   pointer-events: auto;
 }
 
-/* メニュー本体（右から出す） */
 .menu {
   position: fixed;
   top: 0;
-  right: -500px; /* ← 初期位置を右へ */
-  width: 500px;
+  right: -200px;
+  width: 200px;
   height: 100%;
-  /* background: #fff; */
+  background: #fff;
   box-shadow: 2px 0 8px rgba(0,0,0,0.2);
   transition: left 0.4s ease;
   z-index: 2;
+  display: block;
 }
 
 #menu-toggle:checked ~ .menu {
-  right: 0px; /* ← 開いたときは左0へ */
+  right: 0px;
 }
 
 .menu ul {
   list-style: none;
   padding: 20px 60px;
+  display: block;
 }
 
 .menu li {

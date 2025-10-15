@@ -26,7 +26,7 @@
                 <div class="nav-wrap">
                     <input type="checkbox" id="menu-toggle" hidden />
 
-                    <label class="hamburger">
+                    <label class="hamburger" for="menu-toggle">
                         <span class="bar"></span>
                         <span class="bar"></span>
                         <span class="bar"></span>
@@ -34,9 +34,7 @@
 
                     <div class="overlay"></div>
 
-                    <!-- <nav aria-label="Primary"> -->
                     <nav class="menu">
-                        <!-- <ul id="primary-nav"> -->
                         <ul>
                             <li><a href="#about">About</a></li>
                             <li><a href="#works">Projects</a></li>
@@ -148,7 +146,7 @@
                 </div>
             </section>
 
-            <section id="contact">
+            <!-- <section id="contact">
                 <h2>Contact</h2>
                 <p style="color: var(--muted)">採用・案件のご相談はメールでお願いします。</p>
                 <form
@@ -179,7 +177,7 @@
                     ></textarea>
                     <button class="btn" type="submit">Send</button>
                 </form>
-            </section>
+            </section> -->
         </main>
 
         <footer>
@@ -193,32 +191,5 @@
                 </div>
             </div>
         </footer>
-
-        <!-- <script>
-            // small JS: header shadow on scroll + mobile nav toggle
-            (function () {
-                const header = document.querySelector("header");
-                const toggle = document.querySelector(".mobile-nav-toggle");
-                const nav = document.getElementById("primary-nav");
-                window.addEventListener("scroll", () => {
-                    if (window.scrollY > 10)
-                        header.style.boxShadow = "0 6px 18px rgba(15,23,42,0.06)";
-                    else header.style.boxShadow = "none";
-                });
-
-                if (toggle && nav) {
-                    toggle.addEventListener("click", () => {
-                        const expanded = toggle.getAttribute("aria-expanded") === "true";
-                        toggle.setAttribute("aria-expanded", String(!expanded));
-                        nav.classList.toggle("open");
-                        // also set focus to first link when opened
-                        if (!expanded) {
-                            const first = nav.querySelector("a");
-                            if (first) first.focus();
-                        }
-                    });
-                }
-            })();
-        </script> -->
     </body>
 </html>
