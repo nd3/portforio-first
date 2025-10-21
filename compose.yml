@@ -1,6 +1,7 @@
 services:
   web:
-    image: httpd:latest
+    image: httpd
+    container_name: test-web-container
     ports:
       - "80:80"
     volumes:
